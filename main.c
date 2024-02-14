@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/14 21:08:04 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:57:32 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,6 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-char	*ft_strdup(char *str)
-{
-	char	*new_str;
-	int		i;
-
-	i = 0;
-	new_str = (char *)malloc(ft_strlen(str) + 1);
-	if (new_str == NULL)
-		return (NULL);
-	while (str[i] != '\0')
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
 
 // char	*find_path(char **envp)
 // {
@@ -69,39 +52,58 @@ char	*ft_strdup(char *str)
 // 	return (*envp + 5);
 // }
 
-int get_infile_fd(char **argv)
+// int get_infile_fd(char **argv)
+// {
+// 	int verify_fd;
+
+// 	printf("infile: %s\n", argv[1]);
+// 	verify_fd = open(argv[1], O_RDONLY, 0777);
+// 	if (verify_fd == -1)
+// 		return (printf("infile no valido \n"),-1);	
+// 	return (verify_fd);
+// }
+
+// int	get_outfile_fd(int argc, char *argv[])
+// {
+// 	int verify_fd;
+
+// 	printf("outfile: %s\n", argv[argc - 1]);
+// 	verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_TRUNC, 0777);
+// 	if (verify_fd == -1)
+// 		return (printf("infile no valido \n"),-1);
+// 	return (verify_fd);
+// }
+
+
+int get_file(char **argv, int argc, int in_out)
 {
 	int verify_fd;
 
-	printf("infile: %s\n", argv[1]);
-	verify_fd = open(argv[1], O_RDONLY, 0777);
-	if (verify_fd == -1)
-		return (printf("infile no valido \n"),-1);	
-	return (verify_fd);
+	if (in_out == 0)
+	{
+		verify_fd = open(argv[1], O_RDONLY, 0777);
+		if (verify_fd == -1)
+			return (printf("infile no valido \n"),-1);	
+		return (verify_fd);
+	}
+	else
+	{
+		verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if (verify_fd == -1)
+			return (printf("infile no valido \n"),-1);
+		return (verify_fd);
+	}
 }
 
-int	get_outfile_fd(int argc, char *argv[])
-{
-	int verify_fd;
-
-	printf("outfile: %s\n", argv[argc - 1]);
-	verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (verify_fd == -1)
-		return (printf("infile no valido \n"),-1);
-	return (verify_fd);
-}
-
-int main(int argc, char **argv) 
+int main(int argc, char **argv, char **envp) 
 {
 	int pipe_fd[2];
 	int fd_in;
 	int fd_out;
 	int pid1;
-	int pid2;
-	
-	// 0 infile, 1 outfile
-	fd_in = get_infile_fd(argv);
-	fd_out = get_outfile_fd(argc, argv);
+
+	fd_in = get_file(argv, argc, 0);
+	fd_out = get_file(argv, argc, 1);
 	if (fd_in == -1 || fd_out == -1)
 		return (perror("algo malo con los fd"), -1);
 	
@@ -126,7 +128,8 @@ int main(int argc, char **argv)
 		close(pipe_fd[1]);
 		execlp(argv[3], argv[3], "-l", NULL);
 		exit(1);
-
+	close(fd_in);
+	close(fd_out);
 
 	return (0);
 }
