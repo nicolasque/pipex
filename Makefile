@@ -2,16 +2,16 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 # Source files
-SRCS = main.c
+SRCS = pipex.c libft.a
 
 # Object files
 OBJS = $(SRCS:.c=.o)
 
 # Executable
-TARGET = myprogram
+TARGET = a.out
 
 # Default target
 all: $(TARGET)

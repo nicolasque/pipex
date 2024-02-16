@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/14 21:57:32 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:57:27 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include "pipex.h"
 
 size_t ft_strlen(char *str)
 {
@@ -45,12 +46,12 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 }
 
 
-// char	*find_path(char **envp)
-// {
-// 	while (ft_strncmp("PATH", *envp, 4))
-// 		envp++;
-// 	return (*envp + 5);
-// }
+char	*ft_find_path(char **envp)
+{
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
+}
 
 // int get_infile_fd(char **argv)
 // {
@@ -95,6 +96,22 @@ int get_file(char **argv, int argc, int in_out)
 	}
 }
 
+int	ft_exe_cmd(int argc, char **argv, char **envp)
+{
+	char **path_list;
+	
+	path_list = ft_split(ft_find_path(envp), ':');
+	while (*path_list)
+	{
+		printf("que hay en path list: %s\n", *path_list);
+		path_list ++;
+	}
+	
+	return (0);
+}
+
+
+
 int main(int argc, char **argv, char **envp) 
 {
 	int pipe_fd[2];
@@ -102,6 +119,7 @@ int main(int argc, char **argv, char **envp)
 	int fd_out;
 	int pid1;
 
+	ft_exe_cmd(argc, argv, envp);
 	fd_in = get_file(argv, argc, 0);
 	fd_out = get_file(argv, argc, 1);
 	if (fd_in == -1 || fd_out == -1)
