@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/16 13:57:27 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:10:56 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ char	*ft_find_path(char **envp)
 	return (*envp + 5);
 }
 
+void	ft_free_split(char **split_list)
+{
+	int	i;
+	i = 0;
+	while (split_list[i])
+	{
+		free(split_list[i]);
+		i++;
+	}
+	free(split_list);
+}
+
+
 // int get_infile_fd(char **argv)
 // {
 // 	int verify_fd;
@@ -96,21 +109,44 @@ int get_file(char **argv, int argc, int in_out)
 	}
 }
 
-int	ft_exe_cmd(int argc, char **argv, char **envp)
+char	*ft_get_cmd_path(char *comand, char **envp) // recive the argv[x]
 {
-	char **path_list;
+	int		i;
+	char	**path_split;
+	char	**comand_split;
+	char	*path_try;
+	char	*path_exec;
 	
-	path_list = ft_split(ft_find_path(envp), ':');
-	while (*path_list)
+	path_split = ft_split(ft_find_path(envp), ':');
+	comand_split = ft_split(comand, ' ');
+	i = 0;
+	while (path_split[i])
 	{
-		printf("que hay en path list: %s\n", *path_list);
-		path_list ++;
+		path_try = ft_strjoin(path_split[i], "/");
+		path_exec = ft_strjoin(path_try, comand_split[0]);
+		free(path_try);
+		if (access(path_exec, F_OK | X_OK) == 0)
+		{
+   			// printf("El archivo '%s' existe y se puede ejecutar.\n", path_exec);
+			ft_free_split(comand_split);
+			return (path_exec);
+ 		}
+		free(path_exec);
+		i++;
 	}
-	
-	return (0);
+	ft_free_split(comand_split);
+	ft_free_split(path_split);
+	return (comand);
 }
 
+void	ft_exec(char *comand, char envp)
+{
+	char	**comand_split;
+	char	*path_exec;
 
+	comand_split = ft_split(comand, ' ');
+	
+}
 
 int main(int argc, char **argv, char **envp) 
 {
@@ -119,7 +155,10 @@ int main(int argc, char **argv, char **envp)
 	int fd_out;
 	int pid1;
 
-	ft_exe_cmd(argc, argv, envp);
+	printf("que ruta al coando tengo 1: %s\n" ,ft_get_cmd_path(argv[2], envp));
+	printf("que ruta al coando tengo 2: %s\n" ,ft_get_cmd_path(argv[3], envp));
+
+	
 	fd_in = get_file(argv, argc, 0);
 	fd_out = get_file(argv, argc, 1);
 	if (fd_in == -1 || fd_out == -1)
