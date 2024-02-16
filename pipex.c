@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/16 20:10:56 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:22:26 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,18 @@ char	*ft_get_cmd_path(char *comand, char **envp) // recive the argv[x]
 	return (comand);
 }
 
-void	ft_exec(char *comand, char envp)
+void	ft_exec(char *comand, char **envp)
 {
 	char	**comand_split;
-	char	*path_exec;
 
 	comand_split = ft_split(comand, ' ');
-	
+	if (execve(ft_get_cmd_path(comand_split[0], envp), comand_split, envp) == -1)
+	{
+		printf("comando no encontrado: %s\n", comand);
+		
+		ft_free_split(comand_split);
+		exit(2);
+	}
 }
 
 int main(int argc, char **argv, char **envp) 
@@ -154,10 +159,6 @@ int main(int argc, char **argv, char **envp)
 	int fd_in;
 	int fd_out;
 	int pid1;
-
-	printf("que ruta al coando tengo 1: %s\n" ,ft_get_cmd_path(argv[2], envp));
-	printf("que ruta al coando tengo 2: %s\n" ,ft_get_cmd_path(argv[3], envp));
-
 	
 	fd_in = get_file(argv, argc, 0);
 	fd_out = get_file(argv, argc, 1);
@@ -176,15 +177,16 @@ int main(int argc, char **argv, char **envp)
 		dup2(fd_in, 0);
 		dup2(pipe_fd[1], 1);
 		close(pipe_fd[0]);
-		execlp(argv[2], argv[2], "-l", NULL);
-		exit(1);
+		// execlp(argv[2], argv[2], "-l", NULL);
+		ft_exec(argv[2], envp);
+		exit(0);
 	}
 	// Parent proces
 		dup2(fd_out, 1);
 		dup2(pipe_fd[0],0);
 		close(pipe_fd[1]);
-		execlp(argv[3], argv[3], "-l", NULL);
-		exit(1);
+		// execlp(argv[3], argv[3], "-l", NULL);
+		ft_exec(argv[3], envp);
 	close(fd_in);
 	close(fd_out);
 
