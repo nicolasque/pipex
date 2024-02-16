@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/16 20:22:26 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:47:34 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include "pipex.h"
 
-size_t ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
@@ -45,7 +45,6 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-
 char	*ft_find_path(char **envp)
 {
 	while (ft_strncmp("PATH", *envp, 4))
@@ -56,6 +55,7 @@ char	*ft_find_path(char **envp)
 void	ft_free_split(char **split_list)
 {
 	int	i;
+
 	i = 0;
 	while (split_list[i])
 	{
@@ -65,22 +65,18 @@ void	ft_free_split(char **split_list)
 	free(split_list);
 }
 
-
 // int get_infile_fd(char **argv)
 // {
 // 	int verify_fd;
-
 // 	printf("infile: %s\n", argv[1]);
 // 	verify_fd = open(argv[1], O_RDONLY, 0777);
 // 	if (verify_fd == -1)
 // 		return (printf("infile no valido \n"),-1);	
 // 	return (verify_fd);
 // }
-
 // int	get_outfile_fd(int argc, char *argv[])
 // {
 // 	int verify_fd;
-
 // 	printf("outfile: %s\n", argv[argc - 1]);
 // 	verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_TRUNC, 0777);
 // 	if (verify_fd == -1)
@@ -88,28 +84,27 @@ void	ft_free_split(char **split_list)
 // 	return (verify_fd);
 // }
 
-
-int get_file(char **argv, int argc, int in_out)
+int	get_file(char **argv, int argc, int in_out)
 {
-	int verify_fd;
+	int	verify_fd;
 
 	if (in_out == 0)
 	{
 		verify_fd = open(argv[1], O_RDONLY, 0777);
 		if (verify_fd == -1)
-			return (printf("infile no valido \n"),-1);	
+			return (printf("infile no valido \n"), -1); //TODO:  CAMBIAR EL PRINT POR MENSAJE DE ERROR 
 		return (verify_fd);
 	}
 	else
 	{
-		verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		verify_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (verify_fd == -1)
-			return (printf("infile no valido \n"),-1);
+			return (printf("infile no valido \n"), -1); //TODO:  CAMBIAR EL PRINT POR MENSAJE DE ERROR 
 		return (verify_fd);
 	}
 }
 
-char	*ft_get_cmd_path(char *comand, char **envp) // recive the argv[x]
+char	*ft_get_cmd_path(char *comand, char **envp)
 {
 	int		i;
 	char	**path_split;
@@ -127,7 +122,6 @@ char	*ft_get_cmd_path(char *comand, char **envp) // recive the argv[x]
 		free(path_try);
 		if (access(path_exec, F_OK | X_OK) == 0)
 		{
-   			// printf("El archivo '%s' existe y se puede ejecutar.\n", path_exec);
 			ft_free_split(comand_split);
 			return (path_exec);
  		}
@@ -146,8 +140,7 @@ void	ft_exec(char *comand, char **envp)
 	comand_split = ft_split(comand, ' ');
 	if (execve(ft_get_cmd_path(comand_split[0], envp), comand_split, envp) == -1)
 	{
-		printf("comando no encontrado: %s\n", comand);
-		
+		perror("comando no encontrado: \n");
 		ft_free_split(comand_split);
 		exit(2);
 	}
