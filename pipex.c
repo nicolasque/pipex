@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/17 14:50:45 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:05:09 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_get_cmd_path(char *comand, char **envp)
 	char	**comand_split;
 	char	*path_try;
 	char	*path_exec;
-	
+
 	path_split = ft_split(ft_find_path(envp), ':');
 	comand_split = ft_split(comand, ' ');
 	i = 0;
@@ -32,7 +32,7 @@ char	*ft_get_cmd_path(char *comand, char **envp)
 		{
 			ft_free_split(comand_split);
 			return (path_exec);
- 		}
+		}
 		free(path_exec);
 		i++;
 	}
@@ -44,9 +44,11 @@ char	*ft_get_cmd_path(char *comand, char **envp)
 void	ft_exec(char *comand, char **envp)
 {
 	char	**comand_split;
+	char	*cmd_path;
 
 	comand_split = ft_split(comand, ' ');
-	if (execve(ft_get_cmd_path(comand_split[0], envp), comand_split, envp) == -1)
+	cmd_path = ft_get_cmd_path(comand_split[0], envp);
+	if (execve(cmd_path, comand_split, envp) == -1)
 	{
 		perror("Pipex:");
 		ft_free_split(comand_split);
@@ -77,10 +79,10 @@ int	ft_parent(int pipe_fd[], char **argv, char **envp, int argc)
 
 	fd_out = get_file(argv, argc, 1);
 	if (fd_out == -1)
-		return(perror("Pipex"), -1);
+		return (perror("Pipex"), -1);
 	dup2(fd_out, 1);
 	close(fd_out);
-	dup2(pipe_fd[0],0);
+	dup2(pipe_fd[0], 0);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	ft_exec(argv[3], envp);
@@ -88,13 +90,13 @@ int	ft_parent(int pipe_fd[], char **argv, char **envp, int argc)
 	return (0);
 }
 
-int main(int argc, char **argv, char **envp) 
+int	main(int argc, char **argv, char **envp)
 {
-	int pipe_fd[2];
-	int pid1;
+	int	pipe_fd[2];
+	int	pid1;
 
 	if (pipe(pipe_fd) == -1)
-		return (perror("Problema con el pipe"), 1);	
+		return (perror("Problema con el pipe"), 1);
 	pid1 = fork();
 	if (pid1 < 0)
 		return (perror("Porblem wit fork"), 2);
@@ -104,4 +106,3 @@ int main(int argc, char **argv, char **envp)
 	ft_parent(pipe_fd, argv, envp, argc);
 	return (0);
 }
-

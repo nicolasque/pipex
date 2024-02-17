@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:50:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/17 14:54:55 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:01:31 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,6 @@ void	ft_free_split(char **split_list)
 	free(split_list);
 }
 
-// int get_infile_fd(char **argv)
-// {
-// 	int verify_fd;
-// 	printf("infile: %s\n", argv[1]);
-// 	verify_fd = open(argv[1], O_RDONLY, 0777);
-// 	if (verify_fd == -1)
-// 		return (printf("infile no valido \n"),-1);	
-// 	return (verify_fd);
-// }
-// int	get_outfile_fd(int argc, char *argv[])
-// {
-// 	int verify_fd;
-// 	printf("outfile: %s\n", argv[argc - 1]);
-// 	verify_fd = open(argv[argc - 1],O_WRONLY | O_CREAT | O_TRUNC, 0777);
-// 	if (verify_fd == -1)
-// 		return (printf("infile no valido \n"),-1);
-// 	return (verify_fd);
-// }
-
 int	get_file(char **argv, int argc, int in_out)
 {
 	int	verify_fd;
@@ -87,14 +68,14 @@ int	get_file(char **argv, int argc, int in_out)
 	{
 		verify_fd = open(argv[1], O_RDONLY, 0777);
 		if (verify_fd == -1)
-			return (-1); //TODO:  CAMBIAR EL PRINT POR MENSAJE DE ERROR 
+			return (-1);
 		return (verify_fd);
 	}
 	else
 	{
 		verify_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (verify_fd == -1)
-			return (-1); //TODO:  CAMBIAR EL PRINT POR MENSAJE DE ERROR 
+			return (-1);
 		return (verify_fd);
 	}
 }
