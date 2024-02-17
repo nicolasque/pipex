@@ -4,7 +4,7 @@ CC				= @cc
 RM				= @rm -f
 CFLAGS			= -Wall -Wextra -Werror -ggdb -pedantic -I.
 
-NAME			= ../libft.a
+NAME			= libft.a
 
 all:			$(NAME)
 

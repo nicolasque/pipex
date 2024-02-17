@@ -1,29 +1,25 @@
-# Compiler
-CC = gcc
+SRCS			= pipex_utils.c pipex.c libft/libft.a
+OBJS			= $(SRCS:.c=.o)
+CC				= @cc
+RM				= @rm -f
+CFLAGS			= -Wall -Wextra -Werror -ggdb -pedantic -I.
 
-# Compiler flags
-CFLAGS = #-Wall -Wextra -Werror
+NAME			= pipex
 
-# Source files
-SRCS = pipex.c libft.a
+all:			$(NAME)
 
-# Object files
-OBJS = $(SRCS:.c=.o)
+$(NAME):		$(OBJS)
+				@ar rcs $(NAME) $(OBJS)
 
-# Executable
-TARGET = a.out
-
-# Default target
-all: $(TARGET)
-
-# Compile source files into object files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Link object files into executable
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
-
-# Clean up object files and executable
 clean:
-	rm -f $(OBJS) $(TARGET)
+				@$(RM) $(OBJS) $(BONUS_OBJS)
+
+fclean:			clean
+				@$(RM) $(NAME)
+
+re:				fclean $(NAME)
+
+bonus:			$(OBJS) $(BONUS_OBJS)
+				@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+
+.PHONY:			all clean fclean re bonus
