@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:21:46 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/17 15:05:50 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:16:37 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	**ft_split(char const *s, char c)
 	result[splits] = NULL;
 	return (result);
 }
+
 
 // #include <stdio.h>
 // int main()
