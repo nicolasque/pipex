@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 12:59:08 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:19:52 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,19 @@ int	main(int argc, char **argv, char **envp)
 	int	pipe_fd[2];
 	int	pid1;
 
+	if (argc != 5)
+		exit(130);
 	if (pipe(pipe_fd) == -1)
-		return (perror("Problema con el pipe"), 1);
+		exit(-1);
 	pid1 = fork();
 	if (pid1 < 0)
-		return (perror("Porblem wit fork"), 2);
+		exit(-1);
 	if (pid1 == 0)
+	{
 		if (ft_child(pipe_fd, argv, envp, argc) == -1)
-			return (-2);
-	ft_parent(pipe_fd, argv, envp, argc);
+			return (-2);	
+	}
+	else
+		ft_parent(pipe_fd, argv, envp, argc);
 	return (0);
 }

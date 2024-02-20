@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:50:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/17 15:01:31 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:36:14 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ int	get_file(char **argv, int argc, int in_out)
 
 	if (in_out == 0)
 	{
-		verify_fd = open(argv[1], O_RDONLY, 0777);
+		verify_fd = open(argv[1], O_RDONLY, 0644);
 		if (verify_fd == -1)
 			return (-1);
 		return (verify_fd);
 	}
 	else
 	{
-		verify_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		verify_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (verify_fd == -1)
 			return (-1);
 		return (verify_fd);
