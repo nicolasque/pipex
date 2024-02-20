@@ -1,25 +1,36 @@
-SRCS			= pipex_utils.c pipex.c libft/libft.a
-OBJS			= $(SRCS:.c=.o)
-CC				= @cc
-RM				= @rm -f
-CFLAGS			= -Wall -Wextra -Werror -ggdb -pedantic -I.
+NAME = pipex
 
-NAME			= pipex
+CC = gcc
 
-all:			$(NAME)
+CFLAGS = -Werror -Wall -Wextra -fsanitize=address
 
-$(NAME):		$(OBJS)
-				@ar rcs $(NAME) $(OBJS)
+RM = rm -rf
 
-clean:
-				@$(RM) $(OBJS) $(BONUS_OBJS)
+SRCS = 	pipex.c\
+		pipex_utils.c\
+		libft/libft.a\
 
-fclean:			clean
-				@$(RM) $(NAME)
+SRCS_BONUS = 	pipex_bonus.c\
+				pipex_utils_bonus.c\
+				libft/libft.a\
 
-re:				fclean $(NAME)
+$(NAME) :
+	make all -C libft
+	gcc $(CFLAGS) $(SRCS) -o $(NAME)
 
-bonus:			$(OBJS) $(BONUS_OBJS)
-				@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
-.PHONY:			all clean fclean re bonus
+all : $(NAME)
+
+fclean : clean
+	$(RM) $(NAME)
+	make fclean -C libft
+
+clean :
+	$(RM) $(NAME)
+	make clean -C libft
+
+re : fclean all
+
+bonus : clean
+	make all -C libft
+	gcc $(CFLAGS) $(SRCS_BONUS) -o $(NAME)
