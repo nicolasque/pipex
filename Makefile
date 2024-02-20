@@ -8,6 +8,7 @@ RM = rm -rf
 
 SRCS = 	pipex.c\
 		pipex_utils.c\
+		errors.c\
 		libft/libft.a\
 
 SRCS_BONUS = 	pipex_bonus.c\

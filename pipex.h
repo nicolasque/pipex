@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:46:02 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 13:08:27 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:58:54 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,8 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_find_path(char **envp);
 void	ft_free_split(char **split_list);
 int		get_file(char **argv, int argc, int in_out);
+void	ft_error_msg(char *str);
+int	ft_printf(char const *str, ...);
+
 
 #endif //PIPEX_H

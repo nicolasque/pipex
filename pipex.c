@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 21:49:56 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:56:32 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_child(int pipe_fd[], char **argv, char **envp, int argc)
 
 	fd_in = get_file(argv, argc, 0);
 	if (fd_in == -1)
-		return (perror("Pipex"), -1);
+		ft_error_msg("Problem with infile");
 	dup2(fd_in, 0);
 	close(fd_in);
 	dup2(pipe_fd[1], 1);
@@ -79,7 +79,7 @@ int	ft_parent(int pipe_fd[], char **argv, char **envp, int argc)
 
 	fd_out = get_file(argv, argc, 1);
 	if (fd_out == -1)
-		return (perror("Pipex"), -1);
+		ft_error_msg("Problem with outfile");
 	dup2(fd_out, 1);
 	close(fd_out);
 	dup2(pipe_fd[0], 0);
@@ -97,9 +97,9 @@ int	main(int argc, char **argv, char **envp)
 	int status;
 
 	if (argc != 5)
-		exit(130);
+		ft_error_msg("Argument numbr no valid");
 	if (pipe(pipe_fd) == -1)
-		exit(-1);
+		ft_error_msg("Problem with pipe");
 	pid1 = fork();
 	if (pid1 < 0)
 		exit(-1);
@@ -108,10 +108,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_child(pipe_fd, argv, envp, argc) == -1)
 			return (-2);
 	}
-	else
-	{
-		ft_parent(pipe_fd, argv, envp, argc);
-	}
-		waitpid(pid1, &status, 0);
+	ft_parent(pipe_fd, argv, envp, argc);
+	waitpid(pid1, &status, 0);
 	return (0);
 }
