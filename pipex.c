@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 17:19:52 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:27:28 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_exec(char *comand, char **envp)
 	{
 		perror("Pipex:");
 		ft_free_split(comand_split);
-		exit(2);
+		exit(-2);
 	}
 }
 
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	pipe_fd[2];
 	int	pid1;
+	int status;
 
 	if (argc != 5)
 		exit(130);
@@ -105,9 +106,12 @@ int	main(int argc, char **argv, char **envp)
 	if (pid1 == 0)
 	{
 		if (ft_child(pipe_fd, argv, envp, argc) == -1)
-			return (-2);	
+			return (-2);
 	}
 	else
+	{
+		waitpid(pid1, &status, 0);
 		ft_parent(pipe_fd, argv, envp, argc);
+	}
 	return (0);
 }
