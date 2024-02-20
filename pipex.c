@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 19:27:28 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:49:56 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		waitpid(pid1, &status, 0);
 		ft_parent(pipe_fd, argv, envp, argc);
 	}
+		waitpid(pid1, &status, 0);
 	return (0);
 }
