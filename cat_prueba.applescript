@@ -4,3 +4,4 @@ repeat 5 times
     do script "cat /dev/urandom"
   end tell
 end repeat
+
