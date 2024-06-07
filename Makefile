@@ -1,38 +1,32 @@
-NAME = pipex
-
+# Variables
 CC = gcc
-
-#CFLAGS = -Werror -Wall -Wextra -g3 -fsanitize=address
-CFLAGS = -Werror -Wall -Wextra -g3
-
-RM = rm -rf
-
-SRCS = 	pipex.c\
+CFLAGS = -Wall -Wextra -Werror -O3 #-g3 -fsanitize=address
+NAME = pipex
+SRC = 	pipex.c\
 		pipex_utils.c\
 		errors.c\
 		libft/libft.a\
 
-SRCS_BONUS = 	pipex_bonus.c\
+SRC_BONUS = 	pipex_bonus.c\
 				pipex_utils_bonus.c\
 				libft/libft.a\
+LIBFT = libft/libft.a
 
-$(NAME) :
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS) -o $(NAME)
+all: $(NAME)
 
+$(NAME): $(LIBFT) $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -L libft -lft -o $(NAME)
 
-all : $(NAME)
+$(LIBFT):
+	make -C libft
 
-fclean : clean
-	$(RM) $(NAME)
-	make fclean -C libft
+clean:
+	make -C libft clean
 
-clean :
-	$(RM) $(NAME)
-	make clean -C libft
+fclean: clean
+	rm -f $(NAME)
+	make -C libft fclean
 
-re : fclean all
+re: fclean all
 
-bonus : clean
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS_BONUS) -o $(NAME)
+.PHONY: all clean fclean re

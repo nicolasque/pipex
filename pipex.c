@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/21 20:05:22 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:39:08 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ int	main(int argc, char **argv, char **envp)
 	int	pid1;
 
 	if (argc != 5 || pipe(pipe_fd) == -1)
-		ft_error_msg("Pipex: error");
+		ft_error_msg("Pipex: error\n");
 	pid1 = fork();
 	if (pid1 < 0)
-		ft_error_msg("Pipex: error");
+		ft_error_msg("Pipex: error\n");
 	if (pid1 == 0)
 	{		
 		if (ft_child(pipe_fd, argv, envp, argc) == -1)
@@ -110,7 +110,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 		ft_parent(pipe_fd, argv, envp, argc);
-	wait(NULL);
-	write(2, "hola", 4);
+	// wait(NULL);
+	// write(2, "hola", 4);
 	return (5000);
 }
