@@ -2,31 +2,27 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O3 #-g3 -fsanitize=address
 NAME = pipex
-SRC = 	pipex.c\
-		pipex_utils.c\
-		errors.c\
-		libft/libft.a\
-
-SRC_BONUS = 	pipex_bonus.c\
-				pipex_utils_bonus.c\
-				libft/libft.a\
+SRCS = pipex.c pipex_utils.c errors.c
+SRCS_BONUS = pipex_bonus.c pipex_utils_bonus.c
 LIBFT = libft/libft.a
 
+# Rules
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -L libft -lft -o $(NAME)
+$(NAME): $(SRCS) $(LIBFT)
+	$(CC) $(CFLAGS) $(SRCS) $(LIBFT) -o $(NAME)
+
+bonus: $(SRCS_BONUS) $(LIBFT)
+	$(CC) $(CFLAGS) $(SRCS_BONUS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-	make -C libft
+	make -C libft all
 
 clean:
+	$(RM) $(NAME)
 	make -C libft clean
 
 fclean: clean
-	rm -f $(NAME)
 	make -C libft fclean
 
 re: fclean all
-
-.PHONY: all clean fclean re

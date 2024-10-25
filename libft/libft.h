@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nico <nico@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 19:19:00 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/05 23:51:52 by nico             ###   ########.fr       */
+/*   Updated: 2024/02/22 13:12:51 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ typedef struct s_list
 # define DEC_DIGS "0123456789"
 # define HEX_UP "0123456789ABCDEF"
 # define HEXA_LO "0123456789abcdef"
+
+//GNL Macros
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif // BUFFER_SIZE
+
+# ifndef FD_OPEN
+#  define FD_OPEN 256
+# endif //FD_OPEN
+//End GNL Macros
 
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -71,6 +81,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-int	ft_printf(char const *str, ...);
+int		ft_printf(char const *str, ...);
+char	*get_next_line(int fd);
 
 #endif //LIBFT_H
