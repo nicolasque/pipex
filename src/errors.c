@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:00:50 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 13:01:09 by nquecedo         ###   ########.fr       */
+/*   Created: 2024/02/20 21:51:50 by nquecedo          #+#    #+#             */
+/*   Updated: 2024/10/25 18:45:55 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main()
+#include "../includes/pipex.h"
+
+void	ft_error_msg(char *str)
 {
-	ft_printf("hello world");
-	return (0);
+	ft_printf("Pipex error: %s", str);
+	exit(1);
 }

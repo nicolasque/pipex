@@ -6,11 +6,11 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 21:33:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/10/25 13:10:23 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:42:52 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 char	*ft_get_cmd_path(char *comand, char **envp)
 {

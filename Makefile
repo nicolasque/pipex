@@ -2,8 +2,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O3 #-g3 -fsanitize=address
 NAME = pipex
-SRCS = pipex.c pipex_utils.c errors.c
-SRCS_BONUS = pipex_bonus.c pipex_utils_bonus.c
+SRCS = src/pipex.c src/pipex_utils.c src/errors.c
+SRCS_BONUS = src/_bonuspipex_bonus.c src_bonus/pipex_utils_bonus.c
 LIBFT = libft/libft.a
 
 # Rules

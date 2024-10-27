@@ -6,11 +6,11 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 14:50:52 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/20 17:36:14 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:45:52 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 size_t	ft_strlen(char *str)
 {
