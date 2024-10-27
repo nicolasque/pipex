@@ -2,10 +2,10 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O3 #-g3 -fsanitize=address
 NAME = pipex
-SRCS = src/pipex.c src/pipex_utils.c src/errors.c
-SRCS_BONUS = src/_bonuspipex_bonus.c src_bonus/pipex_utils_bonus.c
+SRCS = src/pipex.c src/pipex_utils.c src/errors.c libft/libft.a
+SRCS_BONUS = src_bonus/pipex_bonus.c src/pipex_utils.c src/errors.c libft/libft.a
 LIBFT = libft/libft.a
-
+NAME_BONUS = pipex_bonus
 # Rules
 all: $(NAME)
 
@@ -26,3 +26,7 @@ fclean: clean
 	make -C libft fclean
 
 re: fclean all
+
+bonus : clean
+	make all -C libft
+	gcc $(CFLAGS) $(SRCS_BONUS) -o $(NAME_BONUS)
